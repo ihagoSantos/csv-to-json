@@ -4,3 +4,5 @@ class InvalidRegexError extends Error {
         this.name = InvalidRegexError.name
     }
 }
+
+module.exports = InvalidRegexError
