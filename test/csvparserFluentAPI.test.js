@@ -1,6 +1,7 @@
 const { describe, it } = require('mocha')
 const { expect } = require('chai')
 const validMock = require('./mock/valid')
+const noHeaderValidMock = require('./mock/no-header-valid')
 const CSVParserFluentAPI = require('./../src/csvParserFluentAPI')
 
 describe('CSVParserFluentAPI', () => {
@@ -27,6 +28,21 @@ describe('CSVParserFluentAPI', () => {
             delimiter: ',',
             useHeader: true,
             header: ['Id', 'Nome', 'Idade', 'Email']
+        })
+    })
+
+    it('#extractHeader with no header', () => {
+        const result = new CSVParserFluentAPI({
+            content: noHeaderValidMock,
+            useHeader: false
+        })
+            .extractHeader()
+            .build()
+        expect(result).to.be.deep.equal({
+            content: noHeaderValidMock,
+            delimiter: ',',
+            useHeader: false,
+            header: []
         })
     })
 })

@@ -16,6 +16,8 @@ class CSVParserFluentAPI {
     }
 
     extractHeader() {
+        if (!this.#document.useHeader) return this
+
         const extractHeaderRegex = evaluateRegex(/^.*\s/)
         let [header] = this.#document.content.match(extractHeaderRegex)
 
@@ -26,7 +28,7 @@ class CSVParserFluentAPI {
         this.#document.content = this.#document.content.replace(extractHeaderRegex, '')
         return this
     }
-    
+
     build() {
         return this.#document
     }
