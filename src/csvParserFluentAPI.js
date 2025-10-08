@@ -33,16 +33,16 @@ class CSVParserFluentAPI {
         const content = this.#document.content
             .split(evaluateRegex(/\n/))
             .filter(line => line.length)
+        const clearRawString = (str) => str.replace(evaluateRegex(/\r/), '')
 
         this.#document.content = content.map(line => {
             const lineObject = new Object()
-            const lineSplitted = line.split(this.#document.delimiter)
-            let documentHeader = this.#document.header
+            const lineSplitted = line.split(this.#document.delimiter).map(l => clearRawString(l))
+            let documentHeader = this.#document.header.map(l => clearRawString(l))
             if (!this.#document.useHeader) {
                 documentHeader = Array.from({ length: lineSplitted.length }, (_, index) => index)
             }
             for (const index in documentHeader) {
-                console.log(index)
                 lineObject[documentHeader[index]] = lineSplitted[index]
             }
             return lineObject
